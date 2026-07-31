@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Rounds — Patient Story Studio (Module 58)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+<style>
+  :root{
+    --paper:#F7FAFB; --card:#FFFFFF; --ink:#0B2530; --line:#DCE7EA; --line-soft:#E9F1F3;
+    --accent:#0891B2; --accent-dark:#0A6E85; --accent-soft:#E3F4F8;
+    --alert:#C2410C; --alert-soft:#FCE9DD; --muted:#5B7480; --tab-inactive:#EEF4F6;
+    --radius:10px; --body-font:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body-font);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  a{color:var(--accent-dark);}
+  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 80px;}
+
+  header.top{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;margin-bottom:24px;flex-wrap:wrap;gap:10px;}
+  header.top h1{font-weight:800;font-size:23px;margin:0;letter-spacing:-0.02em;}
+  header.top .rx{font-weight:600;font-size:11.5px;color:#fff;background:var(--accent);border-radius:20px;padding:4px 11px;}
+  header.top .tagline{font-size:12.5px;color:var(--muted);font-weight:500;}
+  header.top .brand{display:flex;align-items:center;gap:10px;flex-direction:column;align-items:flex-start;}
+
+  .step{margin-bottom:24px;}
+  .step-label{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .step-label .num{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;font-weight:700;}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;box-shadow:0 1px 2px rgba(11,37,48,.04), 0 8px 24px -16px rgba(11,37,48,.08);}
+
+  textarea, input[type=text], input[type=password], select{
+    width:100%;font-family:var(--body-font);font-size:14px;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:9px 11px;color:var(--ink);
+  }
+  textarea:focus, input:focus, select:focus, button:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
+  textarea{resize:vertical;min-height:140px;line-height:1.55;}
+  label{font-size:12.5px;color:var(--muted);display:block;margin-bottom:4px;font-weight:500;}
+  .hint{font-size:12px;color:var(--muted);margin-top:6px;}
+
+  .upload-row{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);}
+  .upload-row input[type=file]{width:100%;font-size:12.5px;color:var(--muted);border:1px dashed var(--line);border-radius:var(--radius);padding:8px 10px;background:var(--paper);}
+  .upload-row input[type=file]::file-selector-button{font-weight:600;font-size:12px;color:#fff;background:var(--accent);border:none;border-radius:999px;padding:6px 13px;margin-right:10px;cursor:pointer;}
+  #uploadStatus.ok{color:var(--accent-dark);}
+  #uploadStatus.err{color:var(--alert);}
+
+  .tabrow{display:flex;gap:4px;background:var(--tab-inactive);padding:4px;border-radius:999px;margin-bottom:16px;width:fit-content;flex-wrap:wrap;}
+  .tabrow .tab{font-weight:600;font-size:12.5px;padding:7px 16px;background:transparent;border:none;border-radius:999px;cursor:pointer;color:var(--muted);transition:background .12s,color .12s;}
+  .tabrow .tab.active{background:var(--accent);color:#fff;}
+
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;}
+  @media(max-width:600px){.row2{grid-template-columns:1fr;}}
+  .key-status{font-size:12px;font-weight:500;margin-top:8px;}
+  .key-status.ok{color:var(--accent-dark);}
+  .key-status.empty{color:var(--muted);}
+
+  details.settings summary{cursor:pointer;font-size:12.5px;color:var(--accent-dark);font-weight:600;list-style:none;display:flex;align-items:center;gap:6px;}
+  details.settings summary::-webkit-details-marker{display:none;}
+  details.settings summary::before{content:"▸";font-size:10px;}
+  details.settings[open] summary::before{content:"▾";}
+
+  .lang-toggle{display:flex;gap:4px;background:var(--tab-inactive);padding:4px;border-radius:999px;width:fit-content;}
+  .lang-toggle button{background:transparent;color:var(--muted);border:none;border-radius:999px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer;}
+  .lang-toggle button.active{background:var(--accent);color:#fff;}
+
+  button{font-weight:700;font-size:13px;background:var(--accent);color:#fff;border:none;border-radius:999px;padding:10px 18px;cursor:pointer;transition:background .12s;}
+  button:hover{background:var(--accent-dark);}
+  button.secondary{background:transparent;color:var(--muted);border:1.5px solid var(--line);}
+  button.secondary:hover{background:var(--tab-inactive);color:var(--ink);}
+  button:disabled{opacity:.5;cursor:not-allowed;}
+
+  .banner{font-size:12.5px;color:var(--ink);border:1px solid var(--line-soft);background:var(--accent-soft);padding:11px 14px;border-radius:var(--radius);margin-bottom:22px;}
+  .banner strong{color:var(--accent-dark);}
+  .error-note{font-size:12.5px;color:var(--alert);background:var(--alert-soft);border:1px solid #f0c8ac;border-radius:var(--radius);padding:9px 12px;margin-bottom:10px;display:none;}
+  .error-note.show{display:block;}
+  .typing{font-size:12px;color:var(--muted);font-weight:500;}
+  .typing::after{content:'';animation:dots 1.2s steps(4,end) infinite;}
+  @keyframes dots{0%{content:'';}25%{content:'.';}50%{content:'..';}75%{content:'...';}}
+
+  footer{margin-top:44px;font-size:11.5px;color:var(--muted);text-align:center;font-weight:500;}
+
+  /* output */
+  #outputArea{margin-top:28px;display:none;}
+  #outputArea.visible{display:block;}
+  .out-tabs{display:flex;gap:4px;background:var(--tab-inactive);padding:4px;border-radius:999px;margin-bottom:14px;width:fit-content;}
+  .out-tabs .otab{font-weight:600;font-size:12.5px;padding:7px 16px;background:transparent;border:none;border-radius:999px;cursor:pointer;color:var(--muted);}
+  .out-tabs .otab.active{background:var(--accent);color:#fff;}
+  .out-pane{display:none;}
+  .out-pane.active{display:block;}
+  .out-body{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);box-shadow:0 1px 2px rgba(11,37,48,.04), 0 8px 24px -16px rgba(11,37,48,.08);padding:18px 20px;max-height:560px;overflow-y:auto;white-space:pre-wrap;font-size:14.5px;line-height:1.65;}
+  .out-body table{border-collapse:collapse;width:100%;font-size:13px;}
+  .out-body th,.out-body td{border:1px solid var(--line);padding:6px 8px;text-align:left;}
+  .out-body th{background:var(--tab-inactive);}
+  .out-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
+
+  .tts-panel{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:14px;padding:12px 14px;background:var(--accent-soft);border:1px solid var(--line-soft);border-radius:var(--radius);}
+  .tts-panel select{width:auto;flex:1;min-width:150px;}
+  .tts-panel .rate-wrap{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:600;}
+  .tts-panel input[type=range]{width:110px;}
+  .tts-status{font-size:12px;color:var(--muted);font-weight:600;min-width:70px;}
+
+  @media(max-width:600px){
+    header.top h1{font-size:19px;}
+    .row2{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <h1>Patient Story Studio</h1>
+        <span class="rx">MODULE 58</span>
+      </div>
+      <div class="tagline">Case Report → Patient Story Converter · fact-audited narrative, English or Hinglish, read online or played as audio</div>
+    </div>
+  </header>
+
+  <div class="banner">
+    <strong>Learning &amp; communication artefact only.</strong> The generated story (and any inferred emotional/timeline detail, tagged [INFERRED]) requires independent clinical verification. Never enter this output into a medical record or use it as a substitute for the source case report.
+  </div>
+
+  <!-- STEP 1: PROVIDER -->
+  <div class="step">
+    <div class="step-label"><span class="num">1</span>AI provider &amp; key</div>
+    <div class="card">
+      <div class="tabrow" id="providerTabs">
+        <button class="tab active" data-provider="claude">Claude</button>
+        <button class="tab" data-provider="gemini">Gemini</button>
+        <button class="tab" data-provider="openai">ChatGPT</button>
+        <button class="tab" data-provider="other">Other</button>
+      </div>
+      <div class="row2">
+        <div>
+          <label id="apiKeyLabel">Claude API key</label>
+          <input type="password" id="apiKey" placeholder="sk-ant-...">
+        </div>
+        <div>
+          <label for="modelName">Model name</label>
+          <input type="text" id="modelName" placeholder="claude-sonnet-4-6">
+        </div>
+      </div>
+      <div class="row2" id="endpointRow" style="display:none;">
+        <div style="grid-column:1/-1;">
+          <label for="apiEndpoint">API endpoint URL</label>
+          <input type="text" id="apiEndpoint" placeholder="https://your-provider.example.com/v1/chat/completions">
+        </div>
+      </div>
+      <div class="key-status empty" id="keyStatus">No key saved for this provider yet.</div>
+      <div class="hint" id="keyHelp"></div>
+      <div class="hint" style="margin-top:8px;">Keys are stored only in your browser's local storage — never sent anywhere except directly to the provider you choose.</div>
+    </div>
+  </div>
+
+  <!-- STEP 2: CASE INPUT -->
+  <div class="step">
+    <div class="step-label"><span class="num">2</span>Case report</div>
+    <div class="card">
+      <label for="caseText">Paste the case report — journal-style, ward-style, or a tagged case history</label>
+      <textarea id="caseText" placeholder="Paste the full case report here..."></textarea>
+      <div class="upload-row">
+        <label for="caseFile">Or upload a case file — PDF, Word (.doc/.docx), or plain text (.txt), max 10MB</label>
+        <input type="file" id="caseFile" accept=".pdf,.doc,.docx,.txt,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain">
+        <div class="hint" id="uploadStatus"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: OPTIONS -->
+  <div class="step">
+    <div class="step-label"><span class="num">3</span>Story language</div>
+    <div class="card">
+      <div class="lang-toggle" id="langToggle">
+        <button class="active" data-lang="english">English</button>
+        <button data-lang="hinglish">Hinglish</button>
+      </div>
+      <div class="hint" style="margin-top:10px;">
+        The Fact Ledger and Fidelity Check always stay in plain English for audit clarity. In Hinglish mode, only the <strong>Patient Story</strong> section is written as natural, spoken-style Hindi-English code-mixed prose (Latin script) — the kind used in Indian teaching wards.
+      </div>
+      <details class="settings" style="margin-top:12px;">
+        <summary>Advanced — story length</summary>
+        <div style="margin-top:10px;max-width:280px;">
+          <label for="storyLength">Target length</label>
+          <select id="storyLength">
+            <option value="400–700 words">Standard (400–700 words)</option>
+            <option value="200–350 words">Short (200–350 words)</option>
+            <option value="700–1000 words">Extended (700–1000 words)</option>
+          </select>
+        </div>
+      </details>
+      <div style="margin-top:18px;">
+        <button id="generateBtn">Generate patient story</button>
+      </div>
+      <div class="error-note" id="errorNote"></div>
+      <div class="typing" id="typingNote" style="display:none;margin-top:10px;">Running Module 58 — extracting ledger, drafting story, running fidelity check</div>
+    </div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div id="outputArea">
+    <div class="step-label"><span class="num">4</span>Output</div>
+    <div class="out-tabs" id="outTabs">
+      <button class="otab active" data-pane="story">Patient Story</button>
+      <button class="otab" data-pane="ledger">Fact Ledger</button>
+      <button class="otab" data-pane="fidelity">Fidelity Check</button>
+    </div>
+
+    <div class="out-pane active" id="pane-story">
+      <div class="tts-panel">
+        <button id="ttsPlay">▶ Play</button>
+        <button class="secondary" id="ttsPause">Pause</button>
+        <button class="secondary" id="ttsStop">Stop</button>
+        <select id="ttsVoice"></select>
+        <div class="rate-wrap">Speed <input type="range" id="ttsRate" min="0.6" max="1.4" step="0.1" value="1"><span id="ttsRateLabel">1.0×</span></div>
+        <div class="tts-status" id="ttsStatus"></div>
+      </div>
+      <div class="out-actions">
+        <button class="secondary" id="copyStoryBtn">Copy story</button>
+        <button class="secondary" id="downloadStoryBtn">Download .txt</button>
+      </div>
+      <div class="out-body" id="storyBody"></div>
+    </div>
+
+    <div class="out-pane" id="pane-ledger">
+      <div class="out-body" id="ledgerBody"></div>
+    </div>
+
+    <div class="out-pane" id="pane-fidelity">
+      <div class="out-body" id="fidelityBody"></div>
+    </div>
+  </div>
+
+  <footer>Vibe Rounds — Patient Story Studio · Module 58 · runs entirely in your browser · bring your own key</footer>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+/* ---------- providers ---------- */
+const PROVIDERS = {
+  claude: { label:'Claude', keyPlaceholder:'sk-ant-...', modelPlaceholder:'claude-sonnet-4-6',
+    help:'Create a key at <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a>. Paste the model name exactly as shown there.' },
+  gemini: { label:'Gemini', keyPlaceholder:'AIza...', modelPlaceholder:'gemini-2.5-flash',
+    help:'Create a key at <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a>.' },
+  openai: { label:'ChatGPT', keyPlaceholder:'sk-...', modelPlaceholder:'gpt-4o-mini',
+    help:'Create a key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a>.' },
+  other: { label:'Other', keyPlaceholder:'API key (leave blank if none)', modelPlaceholder:'model-name-as-required-by-provider', needsEndpoint:true,
+    help:'Works with any OpenAI-compatible <code>/chat/completions</code> endpoint — Groq, Together AI, Mistral, DeepSeek, OpenRouter, Ollama, LM Studio, etc.' }
+};
+
+let state = { provider:'claude', lang:'english' };
+
+/* ---------- localStorage ---------- */
+function loadKeys(){ try{return JSON.parse(localStorage.getItem('pss_keys')||'{}');}catch(e){return{};} }
+function saveKeys(k){ localStorage.setItem('pss_keys', JSON.stringify(k)); }
+function loadModels(){ try{return JSON.parse(localStorage.getItem('pss_models')||'{}');}catch(e){return{};} }
+function saveModels(m){ localStorage.setItem('pss_models', JSON.stringify(m)); }
+function loadEndpoints(){ try{return JSON.parse(localStorage.getItem('pss_endpoints')||'{}');}catch(e){return{};} }
+function saveEndpoints(e){ localStorage.setItem('pss_endpoints', JSON.stringify(e)); }
+function loadCaseText(){ try{return localStorage.getItem('pss_case')||'';}catch(e){return'';} }
+function saveCaseText(t){ try{localStorage.setItem('pss_case', t);}catch(e){} }
+
+/* ---------- provider pane ---------- */
+function renderProviderPane(){
+  const p = PROVIDERS[state.provider];
+  $('apiKeyLabel').textContent = p.label + ' API key';
+  $('apiKey').placeholder = p.keyPlaceholder;
+  $('modelName').placeholder = p.modelPlaceholder;
+  $('keyHelp').innerHTML = p.help;
+  const keys = loadKeys(), models = loadModels();
+  $('apiKey').value = keys[state.provider] || '';
+  $('modelName').value = models[state.provider] || '';
+  $('endpointRow').style.display = p.needsEndpoint ? '' : 'none';
+  if(p.needsEndpoint){ $('apiEndpoint').value = loadEndpoints()[state.provider] || ''; }
+  updateKeyStatus();
+}
+function updateKeyStatus(){
+  const keys = loadKeys(); const el = $('keyStatus');
+  if(keys[state.provider]){ el.textContent = 'Key saved locally for ' + PROVIDERS[state.provider].label + '.'; el.className='key-status ok'; }
+  else { el.textContent = 'No key saved for this provider yet.'; el.className='key-status empty'; }
+}
+document.querySelectorAll('#providerTabs .tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('#providerTabs .tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    state.provider = tab.dataset.provider;
+    renderProviderPane();
+  });
+});
+$('apiKey').addEventListener('input', ()=>{ const k=loadKeys(); k[state.provider]=$('apiKey').value.trim(); saveKeys(k); updateKeyStatus(); });
+$('modelName').addEventListener('input', ()=>{ const m=loadModels(); m[state.provider]=$('modelName').value.trim(); saveModels(m); });
+$('apiEndpoint').addEventListener('input', ()=>{ const e=loadEndpoints(); e[state.provider]=$('apiEndpoint').value.trim(); saveEndpoints(e); });
+renderProviderPane();
+
+/* ---------- language toggle ---------- */
+document.querySelectorAll('#langToggle button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#langToggle button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    state.lang = btn.dataset.lang;
+  });
+});
+
+/* ---------- case text persistence ---------- */
+$('caseText').value = loadCaseText();
+$('caseText').addEventListener('input', ()=>saveCaseText($('caseText').value));
+
+/* ---------- file upload ---------- */
+const MAX_UPLOAD_BYTES = 10*1024*1024;
+if(typeof pdfjsLib !== 'undefined'){ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; }
+function setUploadStatus(msg, kind){ const el=$('uploadStatus'); el.textContent=msg; el.className='hint'+(kind?' '+kind:''); }
+async function extractPdfText(file){
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({data:buf}).promise;
+  let out=[];
+  for(let i=1;i<=pdf.numPages;i++){ const page=await pdf.getPage(i); const content=await page.getTextContent(); out.push(content.items.map(it=>it.str).join(' ')); }
+  return out.join('\n\n').trim();
+}
+async function extractDocxText(file){ const buf=await file.arrayBuffer(); const result=await mammoth.extractRawText({arrayBuffer:buf}); return (result.value||'').trim(); }
+function extractTxtText(file){ return file.text(); }
+
+$('caseFile').addEventListener('change', async (e)=>{
+  const file = e.target.files && e.target.files[0];
+  if(!file) return;
+  if(file.size > MAX_UPLOAD_BYTES){ setUploadStatus(`"${file.name}" is ${(file.size/1024/1024).toFixed(1)}MB — max allowed is 10MB.`, 'err'); e.target.value=''; return; }
+  const name = file.name.toLowerCase();
+  const isPdf = name.endsWith('.pdf') || file.type==='application/pdf';
+  const isDocx = name.endsWith('.docx') || file.type==='application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  const isDoc = name.endsWith('.doc') && !isDocx;
+  const isTxt = name.endsWith('.txt') || file.type==='text/plain';
+  if(!isPdf && !isDocx && !isDoc && !isTxt){ setUploadStatus('Unsupported file type. Use PDF, .docx, or .txt.', 'err'); e.target.value=''; return; }
+  if(isDoc){ setUploadStatus('Legacy .doc is not supported in-browser — please save as .docx or paste the text.', 'err'); e.target.value=''; return; }
+  setUploadStatus('Extracting text from "'+file.name+'"…');
+  try{
+    let text;
+    if(isPdf) text = await extractPdfText(file);
+    else if(isDocx) text = await extractDocxText(file);
+    else text = await extractTxtText(file);
+    if(!text){ setUploadStatus('No extractable text found in that file.', 'err'); return; }
+    $('caseText').value = text;
+    saveCaseText(text);
+    setUploadStatus('Loaded '+text.length+' characters from "'+file.name+'".', 'ok');
+  }catch(err){
+    setUploadStatus('Could not read file: '+err.message, 'err');
+  }
+});
+
+/* ---------- preflight ---------- */
+function preflightOk(){
+  const caseText = $('caseText').value.trim();
+  if(!caseText){ alert('Paste or upload a case first — Step 2.'); return false; }
+  const keys = loadKeys();
+  if(!keys[state.provider] && !PROVIDERS[state.provider].needsEndpoint){ alert('Add an API key for '+PROVIDERS[state.provider].label+' in Step 1 first.'); return false; }
+  if(PROVIDERS[state.provider].needsEndpoint){
+    if(!loadEndpoints()[state.provider]){ alert('Add an API endpoint URL in Step 1 first.'); return false; }
+  }
+  return true;
+}
+
+/* ---------- Module 58 prompt builder ---------- */
+function buildSystemPrompt(caseText, lang, length){
+  const langInstruction = lang === 'hinglish'
+    ? `Write the PATIENT STORY section in natural, spoken-style Hinglish — Hindi and English code-mixed in Latin script, the way a senior resident narrates a case informally to a junior colleague or a patient's family in an Indian teaching hospital. Keep it warm and easy to read aloud. Keep the FACT LEDGER and FIDELITY CHECK sections in plain English for audit clarity.`
+    : `Write everything in plain English.`;
+
+  return `#VibeRounds You are running Module 58 — Case Report → Patient Story Converter — for a medical learner. You are an AI narrative-conversion assistant helping translate clinical data into human story form. You are NOT generating new clinical facts, diagnoses, or opinions beyond what is stated or directly implied in the source. Flag anything inferred for narrative colour as [INFERRED — not in source].
+
+Here is the case report:
+
+${caseText}
+
+Do the following three steps, in order, and output them under EXACTLY these three markdown headers (nothing before the first header, nothing after the last section):
+
+## FACT LEDGER
+Extract and list every clinically material fact from the case report, organised under:
+1. Demographics & context (age, sex, relevant background — no identifiers)
+2. Presenting complaint & timeline
+3. Examination & investigation findings
+4. Diagnosis / working diagnosis
+5. Management & interventions
+6. Course & outcome
+7. Any explicitly stated patient/family perspective, quote, or concern in the source
+Do not add anything not in the source case report. This ledger is ground truth for the story below.
+
+## PATIENT STORY
+Using ONLY the facts in the ledger above, write the case as a narrative patient story:
+- Give the patient a placeholder name or "Ms./Mr. [Initial]" — never a real identifier from the source
+- Natural story arc: who they were day-to-day, what changed, what it felt like for something to be wrong, what happened when they sought care, what was found, what was done, how it resolved (or where it stands)
+- Third person, past tense, plain language a non-medical reader can follow
+- Where the source is silent on subjective experience, you may add ONE brief, clearly-labelled plausible narrative touch per section, tagged inline as [INFERRED] — never more than one per section, never contradicting or exceeding the clinical facts
+- Preserve every clinically material fact from the ledger; do not omit anything for narrative flow
+- Length: ${length}
+- ${langInstruction}
+
+## FIDELITY CHECK
+Audit the story above against the ledger:
+(1) Go line by line through the ledger — confirm which story sentence(s) each line maps to. Flag any ledger fact that did NOT make it into the story.
+(2) List every [INFERRED] tag used in the story — confirm each is clearly narrative colour, not a disguised clinical claim.
+(3) Flag anything in the story NOT traceable to the ledger and not tagged [INFERRED] — this is an error and must be corrected inline here.
+Produce a short compliance table with columns: Ledger Fact | Present in Story? | Story Sentence/Section.
+Keep this section in plain English regardless of the story's language.`;
+}
+
+/* ---------- provider calls (reuse pattern) ---------- */
+async function callClaude(apiKey, model, system, msgs){
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body: JSON.stringify({ model, max_tokens: 4096, system, messages: msgs })
+  });
+  if(!res.ok){ const t=await res.text(); throw new Error(res.status+' '+t.slice(0,200)); }
+  const data = await res.json();
+  return (data.content||[]).map(b=>b.text||'').join('\n').trim();
+}
+async function callGemini(apiKey, model, system, msgs){
+  const contents = msgs.map(m=>({role: m.role==='assistant'?'model':'user', parts:[{text:m.content}]}));
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`, {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ systemInstruction:{parts:[{text:system}]}, contents })
+  });
+  if(!res.ok){ const t=await res.text(); throw new Error(res.status+' '+t.slice(0,200)); }
+  const data = await res.json();
+  const cand = data.candidates && data.candidates[0];
+  const parts = cand && cand.content && cand.content.parts || [];
+  return parts.map(p=>p.text||'').join('\n').trim();
+}
+async function callCustom(endpoint, apiKey, model, system, msgs){
+  if(!endpoint) throw new Error('No API endpoint set for this provider.');
+  const messages = [{role:'system', content:system}].concat(msgs);
+  const headers = {'Content-Type':'application/json'};
+  if(apiKey) headers['Authorization'] = 'Bearer '+apiKey;
+  const res = await fetch(endpoint, { method:'POST', headers, body: JSON.stringify({ model, messages, max_tokens:4096 }) });
+  if(!res.ok){ const t=await res.text(); throw new Error(res.status+' '+t.slice(0,200)); }
+  const data = await res.json();
+  if(data.choices && data.choices[0] && data.choices[0].message) return (data.choices[0].message.content||'').trim();
+  if(data.message && data.message.content) return data.message.content.trim();
+  if(typeof data.content === 'string') return data.content.trim();
+  return JSON.stringify(data).slice(0,500);
+}
+async function callOpenAI(apiKey, model, system, msgs){
+  const messages = [{role:'system', content:system}].concat(msgs);
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+    body: JSON.stringify({ model, messages, max_tokens:4096 })
+  });
+  if(!res.ok){ const t=await res.text(); throw new Error(res.status+' '+t.slice(0,200)); }
+  const data = await res.json();
+  return (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '').trim();
+}
+
+/* ---------- basic markdown -> html renderer (headers, bold, tables, lists) ---------- */
+function mdToHtml(md){
+  const lines = md.split('\n');
+  let html = ''; let inTable=false; let inList=false;
+  for(let i=0;i<lines.length;i++){
+    let line = lines[i];
+    if(/^\|.*\|$/.test(line.trim())){
+      if(!inTable){ html += '<table><tbody>'; inTable=true; }
+      const isSep = /^\|[\s:-]+\|$/.test(line.trim());
+      if(isSep) continue;
+      const cells = line.trim().slice(1,-1).split('|').map(c=>c.trim());
+      const tag = (i>0 && /^\|[\s:-]+\|$/.test((lines[i+1]||'').trim())) ? 'th' : 'td';
+      html += '<tr>' + cells.map(c=>`<${tag}>${escapeHtml(c)}</${tag}>`).join('') + '</tr>';
+      continue;
+    } else if(inTable){ html += '</tbody></table>'; inTable=false; }
+
+    if(/^\s*[-*]\s+/.test(line)){
+      if(!inList){ html += '<ul>'; inList=true; }
+      html += '<li>' + inlineMd(line.replace(/^\s*[-*]\s+/,'')) + '</li>';
+      continue;
+    } else if(inList){ html += '</ul>'; inList=false; }
+
+    if(/^###\s+/.test(line)) html += '<h4>'+inlineMd(line.replace(/^###\s+/,''))+'</h4>';
+    else if(/^##\s+/.test(line)) html += '<h3 style="margin-top:18px;">'+inlineMd(line.replace(/^##\s+/,''))+'</h3>';
+    else if(/^#\s+/.test(line)) html += '<h2>'+inlineMd(line.replace(/^#\s+/,''))+'</h2>';
+    else if(line.trim()==='') html += '<br>';
+    else html += '<p style="margin:6px 0;">'+inlineMd(line)+'</p>';
+  }
+  if(inTable) html += '</tbody></table>';
+  if(inList) html += '</ul>';
+  return html;
+}
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function inlineMd(s){
+  s = escapeHtml(s);
+  s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\[INFERRED[^\]]*\]/gi, m=>`<span style="background:var(--alert-soft);color:var(--alert);padding:1px 6px;border-radius:6px;font-size:12px;font-weight:700;">${m}</span>`);
+  return s;
+}
+
+/* ---------- split model output into 3 sections ---------- */
+function splitSections(raw){
+  const idx = {
+    ledger: raw.search(/##\s*FACT LEDGER/i),
+    story: raw.search(/##\s*PATIENT STORY/i),
+    fidelity: raw.search(/##\s*FIDELITY CHECK/i)
+  };
+  const points = Object.entries(idx).filter(([,v])=>v>=0).sort((a,b)=>a[1]-b[1]);
+  const out = { ledger:'', story:'', fidelity:'' };
+  for(let i=0;i<points.length;i++){
+    const [key, start] = points[i];
+    const end = i+1 < points.length ? points[i+1][1] : raw.length;
+    out[key] = raw.slice(start, end).trim();
+  }
+  // fallback: if nothing matched, dump everything into story
+  if(!points.length) out.story = raw.trim();
+  return out;
+}
+function plainTextFromMd(md){
+  return md.replace(/^##.*$/m,'').replace(/\[INFERRED[^\]]*\]/gi,'').replace(/[*#|]/g,'').replace(/\n{2,}/g,'\n\n').trim();
+}
+
+/* ---------- generate ---------- */
+let lastStoryPlainText = '';
+
+$('generateBtn').addEventListener('click', async ()=>{
+  if(!preflightOk()) return;
+  const caseText = $('caseText').value.trim();
+  const length = $('storyLength').value;
+  const system = buildSystemPrompt(caseText, state.lang, length);
+
+  const keys = loadKeys(), models = loadModels();
+  const apiKey = keys[state.provider];
+  const model = models[state.provider] || PROVIDERS[state.provider].modelPlaceholder;
+
+  $('generateBtn').disabled = true;
+  $('typingNote').style.display = '';
+  $('errorNote').classList.remove('show');
+
+  try{
+    const msgs = [{role:'user', content:'Begin.'}];
+    let reply;
+    if(state.provider === 'claude') reply = await callClaude(apiKey, model, system, msgs);
+    else if(state.provider === 'gemini') reply = await callGemini(apiKey, model, system, msgs);
+    else if(state.provider === 'other') reply = await callCustom(loadEndpoints()[state.provider], apiKey, model, system, msgs);
+    else reply = await callOpenAI(apiKey, model, system, msgs);
+
+    if(!reply) throw new Error('Empty response from model.');
+
+    const sections = splitSections(reply);
+    $('storyBody').innerHTML = mdToHtml(sections.story || '(No story section returned — try again.)');
+    $('ledgerBody').innerHTML = mdToHtml(sections.ledger || '(No ledger section returned.)');
+    $('fidelityBody').innerHTML = mdToHtml(sections.fidelity || '(No fidelity check returned.)');
+    lastStoryPlainText = plainTextFromMd(sections.story || reply);
+
+    $('outputArea').classList.add('visible');
+    document.getElementById('outputArea').scrollIntoView({behavior:'smooth', block:'start'});
+  } catch(err){
+    $('errorNote').textContent = 'Request failed: ' + err.message + ' — check your API key, model name, and that the provider allows browser requests.';
+    $('errorNote').classList.add('show');
+  } finally {
+    $('generateBtn').disabled = false;
+    $('typingNote').style.display = 'none';
+  }
+});
+
+/* ---------- output tabs ---------- */
+document.querySelectorAll('#outTabs .otab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('#outTabs .otab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.out-pane').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    $('pane-'+tab.dataset.pane).classList.add('active');
+  });
+});
+
+/* ---------- copy / download story ---------- */
+$('copyStoryBtn').addEventListener('click', ()=>{
+  navigator.clipboard.writeText(lastStoryPlainText).then(()=>{
+    $('copyStoryBtn').textContent = 'Copied!';
+    setTimeout(()=>$('copyStoryBtn').textContent='Copy story', 1500);
+  });
+});
+$('downloadStoryBtn').addEventListener('click', ()=>{
+  const blob = new Blob([lastStoryPlainText], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'patient-story.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+/* ---------- text-to-speech ---------- */
+let ttsUtterance = null;
+function populateVoices(){
+  const voices = speechSynthesis.getVoices();
+  const sel = $('ttsVoice');
+  const prevValue = sel.value;
+  sel.innerHTML = '';
+  // Prefer Hindi/Indian-English voices first when in Hinglish mode
+  const sorted = [...voices].sort((a,b)=>{
+    const score = v => {
+      if(state.lang==='hinglish' && /hi-IN|hi_IN/i.test(v.lang)) return 0;
+      if(/en-IN/i.test(v.lang)) return 1;
+      if(/^en/i.test(v.lang)) return 2;
+      return 3;
+    };
+    return score(a) - score(b);
+  });
+  sorted.forEach(v=>{
+    const opt = document.createElement('option');
+    opt.value = v.name;
+    opt.textContent = v.name + ' (' + v.lang + ')';
+    sel.appendChild(opt);
+  });
+  if(prevValue) sel.value = prevValue;
+}
+if('speechSynthesis' in window){
+  populateVoices();
+  speechSynthesis.onvoiceschanged = populateVoices;
+} else {
+  $('ttsPlay').disabled = true; $('ttsPause').disabled = true; $('ttsStop').disabled = true;
+  $('ttsStatus').textContent = 'TTS not supported in this browser.';
+}
+
+$('ttsRate').addEventListener('input', ()=>{ $('ttsRateLabel').textContent = parseFloat($('ttsRate').value).toFixed(1)+'×'; });
+
+$('ttsPlay').addEventListener('click', ()=>{
+  if(!lastStoryPlainText){ alert('Generate a patient story first.'); return; }
+  if(speechSynthesis.paused && speechSynthesis.speaking){ speechSynthesis.resume(); $('ttsStatus').textContent='Playing…'; return; }
+  speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(lastStoryPlainText);
+  const voices = speechSynthesis.getVoices();
+  const chosen = voices.find(v=>v.name === $('ttsVoice').value);
+  if(chosen) utt.voice = chosen;
+  utt.rate = parseFloat($('ttsRate').value);
+  utt.onstart = ()=>{ $('ttsStatus').textContent = 'Playing…'; };
+  utt.onend = ()=>{ $('ttsStatus').textContent = 'Finished.'; };
+  utt.onerror = ()=>{ $('ttsStatus').textContent = 'Playback error.'; };
+  ttsUtterance = utt;
+  speechSynthesis.speak(utt);
+});
+$('ttsPause').addEventListener('click', ()=>{
+  if(speechSynthesis.speaking && !speechSynthesis.paused){ speechSynthesis.pause(); $('ttsStatus').textContent='Paused.'; }
+});
+$('ttsStop').addEventListener('click', ()=>{
+  speechSynthesis.cancel(); $('ttsStatus').textContent='Stopped.';
+});
+</script>
+</body>
+</html>
