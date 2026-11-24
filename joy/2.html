@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JREM — Joy Regulation & Engagement Model</title>
+<style>
+:root{--ink:#182433;--muted:#607080;--line:#dce4eb;--bg:#f4f7fa;--white:#fff;
+--l1:#f8dddd;--l1d:#9e3434;--l2:#fff0c9;--l2d:#8a620e;--l3:#d9f0e2;--l3d:#216b43;
+--blue:#e3edfb;--blued:#315d96;--purple:#eee7fa;--purpled:#684c98}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:1120px;margin:auto;padding:32px 22px 60px}.hero{background:linear-gradient(130deg,#172a40,#315a70);color:white;padding:34px;border-radius:22px}
+.kicker{text-transform:uppercase;letter-spacing:.13em;font-size:.76rem;opacity:.8;font-weight:700}.hero h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.08;margin:.5rem 0}.hero p{max-width:760px;color:#e2edf4}
+h2{margin:34px 0 12px;font-size:1.55rem}h3{margin:0 0 7px}.sub{color:var(--muted);margin-top:0}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.pill{padding:6px 11px;border-radius:30px;font-size:.85rem;font-weight:700}
+.p1{background:var(--l1);color:var(--l1d)}.p2{background:var(--l2);color:var(--l2d)}.p3{background:var(--l3);color:var(--l3d)}
+.matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.cell{background:white;border:1px solid var(--line);border-radius:16px;padding:17px;min-height:180px;box-shadow:0 2px 8px #18334a0a}
+.cell[data-level="1"]{border-top:5px solid #d77a7a}.cell[data-level="2"]{border-top:5px solid #e2b84d}.cell[data-level="3"]{border-top:5px solid #60a77d}
+.cell .context{font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:700}
+.cell .level{font-size:.8rem;font-weight:800;margin:8px 0}.cell p{margin:6px 0;color:#455565;font-size:.92rem}
+button{font:inherit;cursor:pointer}.cell button{border:1px solid var(--line);background:#f8fafc;border-radius:9px;padding:7px 10px;margin-top:9px;color:#31475a;font-size:.84rem}
+.detail{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;min-height:130px}
+.detail ul{margin:.4rem 0;padding-left:20px}.detail p{margin:.35rem 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:19px}
+.state{border-left:5px solid #7894b3}.caution{background:#fff8e8;border:1px solid #f0dfb4;padding:17px;border-radius:14px;color:#5e4a20}
+.flow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.step{background:white;border:1px solid var(--line);padding:10px 13px;border-radius:11px;font-weight:650}.arrow{color:#8393a1;font-weight:800}
+small,.small{font-size:.87rem;color:var(--muted)}footer{margin-top:36px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:.85rem}
+@media(max-width:760px){.matrix{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}main{padding:16px 13px 40px}.hero{padding:25px}}
+</style>
+</head>
+<body><main>
+<header class="hero">
+<div class="kicker">A working conceptual framework</div>
+<h1>Joy Regulation &amp;<br>Engagement Model</h1>
+<p><strong>JREM · 3 contexts × 3 levels</strong><br>
+A map of how people relate to themselves, groups and individual peers—and how those interactions can become draining, restorative or generative.</p>
+</header>
+
+<h2>1. The nine-cell map</h2>
+<p class="sub">Select any cell to explore its pattern, potential benefits, risks and possible next move.</p>
+<div class="legend"><span class="pill p1">Level 1 · Draining / reactive</span><span class="pill p2">Level 2 · Restorative / regulating</span><span class="pill p3">Level 3 · Generative / expansive</span></div>
+<div class="matrix" id="matrix">
+<article class="cell" data-level="1"><div class="context">Alone · self-relation</div><div class="level">L1 — Rumination</div><h3>Trapped inward attention</h3><p>Repetitive worry, harsh self-talk, doom-scrolling, replaying conversations.</p><button data-id="a1">Explore this state →</button></article>
+<article class="cell" data-level="2"><div class="context">Alone · self-relation</div><div class="level">L2 — Reflection &amp; reset</div><h3>Gentle recovery</h3><p>Walking, journaling, rest, emotional processing, unpressured daydreaming.</p><button data-id="a2">Explore this state →</button></article>
+<article class="cell" data-level="3"><div class="context">Alone · self-relation</div><div class="level">L3 — Flow &amp; mastery</div><h3>Self-directed creation</h3><p>Deep work, meaningful problem-solving, music, exercise, contemplative practice.</p><button data-id="a3">Explore this state →</button></article>
+<article class="cell" data-level="1"><div class="context">Group · collective</div><div class="level">L1 — Social threat / contagion</div><h3>Belonging at a cost</h3><p>Gossip, status anxiety, hostile groupthink, forced performance, outrage bonding.</p><button data-id="g1">Explore this state →</button></article>
+<article class="cell" data-level="2"><div class="context">Group · collective</div><div class="level">L2 — Belonging &amp; ritual</div><h3>Safe participation</h3><p>Shared meals, relaxed gatherings, team check-ins, familiar celebrations.</p><button data-id="g2">Explore this state →</button></article>
+<article class="cell" data-level="3"><div class="context">Group · collective</div><div class="level">L3 — Collective creation</div><h3>Shared purpose</h3><p>Team flow, collective problem-solving, coordinated performance, meaningful service.</p><button data-id="g3">Explore this state →</button></article>
+<article class="cell" data-level="1"><div class="context">Peer · one-to-one</div><div class="level">L1 — Enmeshment / friction</div><h3>Unsteady connection</h3><p>Validation-seeking, coercion, scorekeeping, repetitive co-rumination, boundary loss.</p><button data-id="p1">Explore this state →</button></article>
+<article class="cell" data-level="2"><div class="context">Peer · one-to-one</div><div class="level">L2 — Safe companionship</div><h3>Mutual ease</h3><p>Attuned listening, honest check-ins, shared humor, comfortable silence.</p><button data-id="p2">Explore this state →</button></article>
+<article class="cell" data-level="3"><div class="context">Peer · one-to-one</div><div class="level">L3 — Generative synergy</div><h3>Mutual elevation</h3><p>Creative collaboration, candid dialogue, intellectual play, reciprocal growth.</p><button data-id="p3">Explore this state →</button></article>
+</div>
+<section class="detail" aria-live="polite" id="detail"><h3>How to use the map</h3><p>Choose a cell. The levels describe patterns of interaction, not fixed personality types or a ranking of human worth. A person can move between them within one day—or one conversation.</p></section>
+
+<h2>2. Polyvagal-informed interpretation</h2>
+<p class="sub">The autonomic nervous system offers a second lens: not another set of joy levels, but a way to consider safety, mobilization and shutdown.</p>
+<div class="grid2">
+<section class="panel state"><h3>Ventral-vagal-associated safety</h3><p>In Polyvagal Theory, cues of safety and social connection are associated with accessible social engagement: facial expression, vocal tone, listening and reciprocal contact.</p><p><strong>JREM relevance:</strong> often supports Peer L2–L3 and Group L2–L3, but does not guarantee joy or creativity.</p></section>
+<section class="panel state"><h3>Sympathetic mobilization</h3><p>Energy for action, defense, effort and movement. It may appear as anxiety or anger, but also as healthy challenge, excitement, sport and purposeful effort.</p><p><strong>JREM relevance:</strong> can appear in Alone L3 exercise or focused work, as well as in reactive states. Activation alone is not “bad.”</p></section>
+<section class="panel state"><h3>Dorsal-vagal-associated shutdown</h3><p>In the theory, this refers to a more immobilized, withdrawn or shut-down defensive response. Subjectively it may involve numbness, low energy or disconnection.</p><p><strong>JREM relevance:</strong> may overlap with some draining experiences, but rumination is not automatically dorsal-vagal shutdown.</p></section>
+<section class="panel state"><h3>Mixed and changing states</h3><p>Real nervous-system responses are complex. People can feel excitement and safety together, or be socially engaged while physiologically activated.</p><p><strong>JREM relevance:</strong> read context, felt safety, flexibility and outcome—not just a label.</p></section>
+</div>
+
+<h2>3. The movement principle</h2>
+<div class="flow"><div class="step">Notice the current state</div><span class="arrow">→</span><div class="step">Find a tolerable reset</div><span class="arrow">→</span><div class="step">Choose a fitting engagement</div><span class="arrow">→</span><div class="step">Reflect on the result</div></div>
+<p>Do not force a jump from distress to peak performance. A small, appropriate shift may help: change posture, drink water, take a walk, reduce stimulation, contact a trusted person, or choose a manageable task. The right move depends on the person and situation.</p>
+
+<h2>4. Quality dimensions to assess</h2>
+<div class="grid2">
+<section class="panel"><h3>Useful outcomes</h3><ul><li>More flexibility and choice</li><li>Restored energy or steadier attention</li><li>Authentic connection and mutual respect</li><li>Meaningful creation or contribution</li><li>Ability to recover after stress</li></ul></section>
+<section class="panel"><h3>Warning signs</h3><ul><li>Repeated depletion without recovery</li><li>Loss of agency or blurred boundaries</li><li>Compulsive activity or avoidance</li><li>Social connection that depends on masking</li><li>“High joy” becoming pressure to perform</li></ul></section>
+</div>
+<div class="caution"><strong>Important distinction:</strong> sadness is not automatically restorative, and overthinking is not a necessary lower stage before joy. Sadness can be meaningful and appropriate, but persistent distress deserves care. Rest, reflection and problem-solving are useful when they actually help—not because a model assigns them a higher rank.</div>
+
+<h2>5. What this model is—and is not</h2>
+<p>JREM is a proposed practical synthesis, not a validated psychological scale or a diagnostic instrument. Its nine cells are a vocabulary for reflection. Polyvagal Theory is influential but debated; specific claims about its evolutionary and physiological mechanisms remain contested. Use the framework as a hypothesis-generating map, not as a measurement of vagal tone or a clinical assessment.</p>
+<footer>
+<strong>Conceptual references for further study</strong><br>
+Stephen W. Porges — Polyvagal Theory and the social engagement system; Mihaly Csikszentmihalyi — Flow; Émile Durkheim — collective effervescence; Aristotle — friendship and flourishing. These traditions inform different parts of the model and should not be treated as if they independently validate the JREM matrix.
+</footer>
+</main>
+<script>
+const data={
+a1:["Alone · L1 — Rumination","Possible experience: repetitive thinking that feels difficult to interrupt. Potential cost: fatigue, narrowed attention and reduced perspective. A gentle next step: externalize the thought in a note, move your body, or choose one concrete question to answer. If the loop is persistent or distressing, consider support rather than trying to solve it by willpower."],
+a2:["Alone · L2 — Reflection & reset","Possible experience: lower-pressure attention that allows recovery or emotional processing. Potential benefit: perspective, emotional clarity and renewed capacity. Try a walk, rest, journaling, music or quiet time. Sadness may be part of this experience, but it is not automatically restorative."],
+a3:["Alone · L3 — Flow & mastery","Possible experience: absorbed, self-directed engagement with a meaningful challenge. Potential benefit: learning, competence and satisfaction. Try a clearly scoped task with an appropriate challenge level, breaks and feedback. High effort can be healthy, but watch for overwork."],
+g1:["Group · L1 — Social threat / contagion","Possible experience: pressure to conform, status monitoring, hostile bonding or emotional contagion. Potential cost: self-censorship and stress. A next step may be to pause, set a boundary, change the topic or leave an unsafe interaction."],
+g2:["Group · L2 — Belonging & ritual","Possible experience: predictable, low-pressure participation. Potential benefit: belonging, support and shared positive affect. Choose groups where participation is voluntary, differences are respected and people can opt out without penalty."],
+g3:["Group · L3 — Collective creation","Possible experience: coordinated effort toward a shared meaningful goal. Potential benefit: collective efficacy, contribution and shared accomplishment. Healthy collective energy preserves dissent, distributes credit and protects individual boundaries."],
+p1:["Peer · L1 — Enmeshment / friction","Possible experience: validation dependence, scorekeeping, coercion or repetitive co-rumination. Potential cost: reduced agency and emotional exhaustion. A next step is to name a need, slow the exchange, clarify boundaries or seek another perspective."],
+p2:["Peer · L2 — Safe companionship","Possible experience: mutual ease, attuned listening and honest contact. Potential benefit: co-regulation, perspective and emotional support. Notice whether both people can speak, disagree, pause and be themselves."],
+p3:["Peer · L3 — Generative synergy","Possible experience: reciprocal challenge and collaboration that helps both people think or create better. Potential benefit: insight, creativity and growth. Keep it mutual: neither person should have to perform, submit or carry all the emotional labor."]
+};
+document.querySelectorAll("button[data-id]").forEach(b=>b.addEventListener("click",()=>{
+ const [title,body]=data[b.dataset.id];document.getElementById("detail").innerHTML="<h3>"+title+"</h3><p>"+body+"</p>";
+ document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"nearest"});
+}));
+</script></body></html>

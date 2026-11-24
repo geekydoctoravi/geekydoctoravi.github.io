@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JREM 2.0 — Three-Axis Joy & Engagement Model</title>
+<style>
+:root{--ink:#172638;--muted:#5e7082;--line:#dbe4ec;--bg:#f3f6f9;--white:#fff;--joy:#e6a23c;--reg:#3b8b79;--gen:#647ac4;--soft:#edf2f6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:1120px;margin:auto;padding:28px 20px 60px}.hero{background:linear-gradient(130deg,#172b43,#315c70);color:#fff;border-radius:22px;padding:32px}
+.kicker{text-transform:uppercase;letter-spacing:.13em;font-size:.75rem;font-weight:750;opacity:.8}.hero h1{font-size:clamp(2rem,5vw,3.1rem);line-height:1.08;margin:.5rem 0}.hero p{max-width:800px;color:#e0ebf2}
+h2{font-size:1.55rem;margin:32px 0 10px}h3{margin:0 0 7px}.muted{color:var(--muted)}.lead{color:var(--muted);margin-top:0}
+.axes{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.axis{background:#fff;border:1px solid var(--line);border-radius:16px;padding:19px;border-top:6px solid var(--axis)}.axis .num{font-size:.76rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}.axis h3{font-size:1.15rem;margin:7px 0}.axis p{font-size:.93rem;color:#506174;margin:.3rem 0}
+.joy{--axis:var(--joy)}.reg{--axis:var(--reg)}.gen{--axis:var(--gen)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{font-weight:750;display:block;margin-bottom:6px}.field select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font:inherit;background:white;color:var(--ink)}
+.range{margin:18px 0}.rangehead{display:flex;justify-content:space-between;gap:12px;align-items:baseline}.rangehead label{font-weight:750}.score{font-weight:850;font-variant-numeric:tabular-nums;color:var(--axis)}input[type=range]{width:100%;accent-color:var(--axis);margin:10px 0}.ends{display:flex;justify-content:space-between;color:var(--muted);font-size:.8rem}
+.output{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:15px}.result{background:#f8fafc;border:1px solid var(--line);padding:17px;border-radius:13px}.result strong{display:block;margin-bottom:5px}.tag{display:inline-block;padding:4px 9px;border-radius:30px;font-size:.78rem;font-weight:800;background:#eaf0f6;color:#334d65}
+.bars{display:grid;gap:13px;margin-top:12px}.barrow{display:grid;grid-template-columns:145px 1fr 35px;gap:10px;align-items:center;font-size:.9rem}.track{height:11px;background:#e9eef3;border-radius:20px;overflow:hidden}.fill{height:100%;width:50%;border-radius:20px}.fill.j{background:var(--joy)}.fill.r{background:var(--reg)}.fill.g{background:var(--gen)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;background:white;border-radius:14px;overflow:hidden}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.9rem}th{background:#edf2f6}tr:last-child td{border-bottom:0}
+.note{background:#fff7e7;border:1px solid #efdfb8;color:#5e4b27;padding:16px;border-radius:14px}.foot{margin-top:35px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:.86rem}
+button{background:#203d59;color:white;border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}button.secondary{background:#edf2f6;color:#2b435a}
+@media(max-width:760px){main{padding:15px 12px 40px}.hero{padding:24px}.axes,.controls,.output,.grid2{grid-template-columns:1fr}.barrow{grid-template-columns:112px 1fr 28px}}
+</style>
+</head>
+<body><main>
+<header class="hero">
+<div class="kicker">JREM 2.0 · Proposed conceptual framework</div>
+<h1>Joy, Regulation &amp;<br>Generative Capacity</h1>
+<p>Three independent dimensions for understanding an experience in any social context. Joy, nervous-system regulation and the capacity to create or contribute can move together—but they do not have to.</p>
+</header>
+
+<h2>1. Three independent axes</h2>
+<p class="lead">Do not collapse these into one “good-to-bad” ladder. Each axis answers a different question.</p>
+<div class="axes">
+<section class="axis joy"><div class="num">Axis A · Reward &amp; meaning</div><h3>Joy potential</h3><p>How pleasurable, absorbing, satisfying or meaningful does this experience feel?</p><p><strong>Low:</strong> flat, unrewarding, aversive<br><strong>Middle:</strong> pleasant, comforting, worthwhile<br><strong>High:</strong> delight, deep satisfaction, meaning</p></section>
+<section class="axis reg"><div class="num">Axis B · Flexibility &amp; recovery</div><h3>Regulatory quality</h3><p>Does this experience support a sense of safety, flexibility, recovery and choice—or leave you overwhelmed, shut down or depleted?</p><p><strong>Low:</strong> dysregulated or depleted<br><strong>Middle:</strong> settling or stabilizing<br><strong>High:</strong> flexible, connected, resilient</p></section>
+<section class="axis gen"><div class="num">Axis C · Agency &amp; output</div><h3>Generative capacity</h3><p>Does the experience enable learning, problem-solving, creativity, contribution or purposeful action?</p><p><strong>Low:</strong> stuck, passive, constrained<br><strong>Middle:</strong> capable, steady, exploratory<br><strong>High:</strong> flow, insight, collaboration, creation</p></section>
+</div>
+
+<h2>2. Try the three-axis check-in</h2>
+<p class="lead">Rate one specific experience—not your whole personality. These sliders are reflection prompts, not clinical measurements.</p>
+<section class="panel">
+<div class="controls">
+<div class="field"><label for="context">Context</label><select id="context"><option value="Alone">Alone · self-relation</option><option value="Group">Group · collective</option><option value="Peer">Peer · one-to-one</option></select></div>
+<div class="field"><label for="activity">Experience</label><select id="activity"><option>Quiet reflection / rest</option><option>Problem-solving / deep work</option><option>Exercise / movement</option><option>Casual social time</option><option>Group project / shared mission</option><option>One-to-one conversation</option><option>Creative collaboration</option><option>Other / mixed experience</option></select></div>
+</div>
+<div class="range joy"><div class="rangehead"><label for="j">A · Joy potential</label><span class="score" id="jv">5 / 10</span></div><input id="j" type="range" min="0" max="10" value="5"><div class="ends"><span>Unrewarding / unpleasant</span><span>Deeply rewarding / meaningful</span></div></div>
+<div class="range reg"><div class="rangehead"><label for="r">B · Regulatory quality</label><span class="score" id="rv">5 / 10</span></div><input id="r" type="range" min="0" max="10" value="5"><div class="ends"><span>Overwhelmed / depleted</span><span>Flexible / settled / connected</span></div></div>
+<div class="range gen"><div class="rangehead"><label for="g">C · Generative capacity</label><span class="score" id="gv">5 / 10</span></div><input id="g" type="range" min="0" max="10" value="5"><div class="ends"><span>Stuck / constrained</span><span>Creating / learning / contributing</span></div></div>
+<div class="output">
+<div class="result"><strong>Your profile</strong><div id="profile">Balanced / mixed profile</div><p class="muted" id="interpret">The three dimensions are currently moderate. Consider what this activity is doing for you.</p></div>
+<div class="result"><strong>Possible next experiment</strong><div id="next">Notice which dimension you want to shift.</div><p class="muted">A small experiment is more useful than forcing yourself into a “higher” state.</p></div>
+</div>
+<div class="bars">
+<div class="barrow"><span>Joy potential</span><div class="track"><div class="fill j" id="jb"></div></div><b id="jn">5</b></div>
+<div class="barrow"><span>Regulation</span><div class="track"><div class="fill r" id="rb"></div></div><b id="rn">5</b></div>
+<div class="barrow"><span>Generativity</span><div class="track"><div class="fill g" id="gb"></div></div><b id="gn">5</b></div>
+</div>
+<p style="margin:18px 0 0"><button id="reset" class="secondary" type="button">Reset check-in</button></p>
+</section>
+
+<h2>3. Why independence matters: four different profiles</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Profile</th><th>Example</th><th>What it tells you</th><th>Possible response</th></tr></thead>
+<tbody>
+<tr><td><strong>High joy · low regulation</strong></td><td>An exciting but stressful event; thrilling competition</td><td>Reward and activation can coexist with strain.</td><td>Keep what is meaningful; add recovery, boundaries and pacing.</td></tr>
+<tr><td><strong>Low joy · high regulation</strong></td><td>Quiet rest, a calm routine, a slow walk on a difficult day</td><td>An experience can be stabilizing without feeling joyful.</td><td>Allow recovery; do not demand excitement from every restorative activity.</td></tr>
+<tr><td><strong>High regulation · high generativity</strong></td><td>Safe, focused collaboration; absorbed creative work</td><td>Supportive conditions may make sustained contribution easier.</td><td>Protect the conditions: autonomy, manageable challenge, trust and breaks.</td></tr>
+<tr><td><strong>High joy · low generativity</strong></td><td>Relaxed entertainment, playful time with friends</td><td>Not every valuable experience needs to produce an output.</td><td>Enjoy it without turning leisure into a productivity task.</td></tr>
+</tbody></table></div>
+
+<h2>4. Apply the axes to Alone · Group · Peer</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Context</th><th>Common draining pattern</th><th>Restorative possibility</th><th>Generative possibility</th></tr></thead>
+<tbody>
+<tr><td><strong>Alone</strong></td><td>Rumination, harsh self-criticism, compulsive scrolling</td><td>Rest, reflective writing, gentle movement, emotional processing</td><td>Deep work, skill practice, exercise, creative flow</td></tr>
+<tr><td><strong>Group</strong></td><td>Coercive conformity, status anxiety, hostile contagion</td><td>Belonging, shared meals, low-pressure rituals</td><td>Collective problem-solving, team flow, shared service</td></tr>
+<tr><td><strong>Peer</strong></td><td>Boundary violations, scorekeeping, co-rumination</td><td>Safe companionship, honest listening, shared humor</td><td>Mutual challenge, co-creation, candid intellectual exchange</td></tr>
+</tbody></table></div>
+<p class="muted">These are examples, not fixed assignments. Exercise may be regulating for one person and overloading for another; a group can be restorative or threatening depending on safety, power and context.</p>
+
+<h2>5. Polyvagal theory as a fourth interpretive lens—not a score</h2>
+<div class="grid2">
+<section class="panel"><h3>Ventral-vagal-associated social engagement</h3><p>Polyvagal Theory associates cues of safety with social engagement, connection and reciprocal communication. This can be relevant to safe peer contact, group belonging and flexible solo engagement.</p></section>
+<section class="panel"><h3>Sympathetic mobilization</h3><p>Mobilization supports action and defense. It can accompany anxiety or conflict, but also exercise, excitement, challenge and purposeful effort. Activation is not inherently unhealthy.</p></section>
+<section class="panel"><h3>Dorsal-vagal-associated shutdown</h3><p>The theory uses this term for a defensive immobilization or shutdown pattern. It may be a useful metaphor for some experiences of withdrawal or numbness, but it should not be inferred from a single behavior.</p></section>
+<section class="panel"><h3>Use observable experience</h3><p>Ask: Do I feel safe enough? Can I shift attention? Do I have choice? Can I connect or disengage? Am I recovering afterward? These are practical observations, not measurements of vagal activity.</p></section>
+</div>
+<div class="note"><strong>Scientific caution:</strong> Polyvagal Theory is influential but debated, and some of its specific physiological and evolutionary claims remain contested. This model does not diagnose autonomic states or measure vagal tone. Treat the theory as one interpretive perspective alongside broader stress, emotion-regulation and social-connection research.</div>
+
+<h2>6. A practical decision sequence</h2>
+<div class="grid2">
+<section class="panel"><h3>If regulation is low</h3><p>First consider safety and load: pause, reduce stimulation, change environment, move gently if helpful, or contact a trusted person. Do not assume that productivity or socializing is the right intervention.</p></section>
+<section class="panel"><h3>If regulation is adequate but joy is low</h3><p>Try a small source of interest, comfort, play or meaning. Some worthwhile activities are neutral rather than joyful; that is okay.</p></section>
+<section class="panel"><h3>If joy is high but generativity is low</h3><p>Enjoy the experience. Rest and play have value without needing to become achievement.</p></section>
+<section class="panel"><h3>If all three are high</h3><p>Notice the conditions that support it—autonomy, challenge, trust, energy and purpose—and protect them without chasing a permanent peak.</p></section>
+</div>
+
+<h2>7. Model status and research agenda</h2>
+<p>JREM 2.0 is a proposed conceptual framework, not a validated psychometric instrument. To test it, researchers could gather repeated experience-sampling ratings for the three axes across Alone, Group and Peer contexts; examine whether the dimensions are empirically distinct; test reliability and predictive validity; and assess cultural and individual differences. Avoid treating the three scores as a single total.</p>
+<footer><strong>Intellectual roots to explore:</strong> flow and optimal experience (Mihaly Csikszentmihalyi); social connection and autonomic regulation (Stephen W. Porges / Polyvagal Theory); collective effervescence (Émile Durkheim); emotion regulation and psychological flexibility research. These sources inform different components; they do not validate this combined model.</footer>
+</main>
+<script>
+const sliders=["j","r","g"];
+const $=id=>document.getElementById(id);
+function band(n){return n<=3?"Low":n<=6?"Moderate":"High"}
+function update(){
+ const v=sliders.map(id=>+$(id).value),[j,r,g]=v;
+ sliders.forEach((id,i)=>{$(id+"v").textContent=v[i]+" / 10";$(["jb","rb","gb"][i]).style.width=(v[i]*10)+"%";$(["jn","rn","gn"][i]).textContent=v[i]});
+ let profile;
+ if(r<=3) profile="Strained regulation";
+ else if(j>=7&&g>=7&&r>=7) profile="Rewarding, regulated and generative";
+ else if(j>=7&&g<=3) profile="Enjoyable, with low output demand";
+ else if(j<=3&&r>=7) profile="Calm or restorative, but not very joyful";
+ else if(g>=7&&r<=3) profile="High effort under strain";
+ else if(j>=7&&r<=3) profile="Rewarding but costly";
+ else profile="Mixed / context-dependent profile";
+ $("profile").textContent=profile;
+ $("interpret").textContent=`Joy: ${band(j).toLowerCase()}; regulation: ${band(r).toLowerCase()}; generativity: ${band(g).toLowerCase()}. Read each score separately rather than averaging them.`;
+ let next;
+ if(r<=3) next="Reduce load and look for safety, support or recovery before adding more demands.";
+ else if(j<=3&&r>=4) next="Try a small source of comfort, interest, play or personal meaning—or accept that this activity may simply be neutral.";
+ else if(g<=3&&j>=4) next="If you want to create, add a manageable challenge or one small next step. If not, let leisure be leisure.";
+ else if(g>=7&&r<=5) next="Keep the meaningful challenge, but check pacing, breaks and whether the effort is sustainable.";
+ else if(j>=7&&r>=7&&g>=7) next="Notice what makes this combination possible. Protect those conditions without demanding that every moment match it.";
+ else next="Name what matters most in this moment: recovery, enjoyment, connection or contribution. Choose one small next step.";
+ $("next").textContent=next;
+}
+sliders.forEach(id=>$(id).addEventListener("input",update));
+$("context").addEventListener("change",()=>{const c=$("context").value;$("activity").value=c==="Alone"?"Quiet reflection / rest":c==="Group"?"Casual social time":"One-to-one conversation"});
+$("reset").addEventListener("click",()=>{sliders.forEach(id=>$(id).value=5);$("context").value="Alone";$("activity").value="Quiet reflection / rest";update()});
+update();
+</script></body></html>
